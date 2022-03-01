@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "job_table")
 @Parcelize
-data class Job constructor(
+data class PDFJob constructor(
     @PrimaryKey(autoGenerate = true) var jobId: Long = 0L,
     var jobName: String,
     var numImage: Int = 0

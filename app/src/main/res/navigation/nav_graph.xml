@@ -31,5 +31,14 @@
     <fragment
         android:id="@+id/createJobFragment"
         android:name="com.bitpunchlab.android.topdf.job.CreateJobFragment"
-        android:label="CreateJobFragment" />
+        android:label="CreateJobFragment" >
+        <action
+            android:id="@+id/action_createJobFragment_to_jobListFragment"
+            app:destination="@id/jobListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/jobListFragment"
+        android:name="com.bitpunchlab.android.topdf.joblist.JobListFragment"
+        android:label="fragment_job_list"
+        tools:layout="@layout/fragment_job_list" />
 </navigation>

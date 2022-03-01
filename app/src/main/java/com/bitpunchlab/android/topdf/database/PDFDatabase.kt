@@ -5,10 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.bitpunchlab.android.topdf.models.ImageItem
-import com.bitpunchlab.android.topdf.models.Job
+import com.bitpunchlab.android.topdf.models.PDFJob
 import kotlinx.coroutines.InternalCoroutinesApi
 
-@Database(entities = [Job::class, ImageItem::class], version = 1, exportSchema = false)
+@Database(entities = [PDFJob::class, ImageItem::class], version = 1, exportSchema = false)
 
 abstract class PDFDatabase : RoomDatabase() {
 

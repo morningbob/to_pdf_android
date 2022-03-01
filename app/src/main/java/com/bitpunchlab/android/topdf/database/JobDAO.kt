@@ -1,17 +1,18 @@
 package com.bitpunchlab.android.topdf.database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import com.bitpunchlab.android.topdf.models.Job
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.bitpunchlab.android.topdf.models.PDFJob
 
 @Dao
 interface JobDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(job: Job)
+    fun insert(PDFJob: PDFJob)
+
+    @Query("SELECT * FROM job_table")
+    fun getAllJobs() : LiveData<List<PDFJob>>
 
     @Delete
-    fun delete(job: Job)
+    fun delete(PDFJob: PDFJob)
 }
