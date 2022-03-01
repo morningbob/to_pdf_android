@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/IntroFragment">
+
+    <fragment
+        android:id="@+id/IntroFragment"
+        android:name="com.bitpunchlab.android.topdf.intro.IntroFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_intro">
+
+        <action
+            android:id="@+id/action_IntroFragment_to_MainFragment"
+            app:destination="@id/MainFragment" />
+        <action
+            android:id="@+id/action_IntroFragment_to_createJobFragment"
+            app:destination="@id/createJobFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/MainFragment"
+        android:name="com.bitpunchlab.android.topdf.main.MainFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/action_MainFragment_to_IntroFragment"
+            app:destination="@id/IntroFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createJobFragment"
+        android:name="com.bitpunchlab.android.topdf.job.CreateJobFragment"
+        android:label="CreateJobFragment" />
+</navigation>
