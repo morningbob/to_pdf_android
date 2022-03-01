@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/fragment_create_job.xml" value="0.14437689969604864" />
+        <entry key="app/src/main/res/layout/fragment_intro.xml" value="0.14437689969604864" />
         <entry key="app/src/main/res/layout/fragment_job_list.xml" value="0.14437689969604864" />
+        <entry key="app/src/main/res/layout/fragment_main.xml" value="0.335" />
         <entry key="app/src/main/res/layout/job_list_item.xml" value="0.14437689969604864" />
       </map>
     </option>

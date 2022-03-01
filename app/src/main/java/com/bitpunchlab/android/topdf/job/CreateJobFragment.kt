@@ -56,9 +56,9 @@ class CreateJobFragment : Fragment() {
     }
 
     private fun isValidName(word: String): Boolean {
-        //val regex = Pattern.compile("[a-zA-Z0-9]*")
+
         val regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]")
-        //return .matches("[a-zA-Z0-9.? ]*")
+
         return !regex.matcher(word).find()
     }
 

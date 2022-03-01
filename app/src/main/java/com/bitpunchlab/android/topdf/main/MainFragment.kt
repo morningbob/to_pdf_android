@@ -23,7 +23,9 @@ class MainFragment : Fragment() {
 
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
-
+        binding.createJobButton.setOnClickListener {
+            findNavController().navigate(R.id.action_MainFragment_to_createJobFragment)
+        }
 
         return binding.root
 
