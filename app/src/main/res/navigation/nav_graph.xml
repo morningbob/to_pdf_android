@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/IntroFragment">
+    app:startDestination="@id/permissionFragment">
 
     <fragment
         android:id="@+id/IntroFragment"
@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_IntroFragment_to_createJobFragment"
             app:destination="@id/createJobFragment" />
+        <action
+            android:id="@+id/action_IntroFragment_to_jobListFragment"
+            app:destination="@id/jobListFragment" />
     </fragment>
     <fragment
         android:id="@+id/MainFragment"
@@ -30,6 +33,9 @@
         <action
             android:id="@+id/action_MainFragment_to_createJobFragment"
             app:destination="@id/createJobFragment" />
+        <argument
+            android:name="pdfJob"
+            app:argType="com.bitpunchlab.android.topdf.models.PDFJob" />
     </fragment>
     <fragment
         android:id="@+id/createJobFragment"
@@ -43,5 +49,18 @@
         android:id="@+id/jobListFragment"
         android:name="com.bitpunchlab.android.topdf.joblist.JobListFragment"
         android:label="List of jobs"
-        tools:layout="@layout/fragment_job_list" />
+        tools:layout="@layout/fragment_job_list" >
+        <action
+            android:id="@+id/action_jobListFragment_to_MainFragment"
+            app:destination="@id/MainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/permissionFragment"
+        android:name="com.bitpunchlab.android.topdf.intro.PermissionFragment"
+        android:label="To PDF"
+        tools:layout="@layout/fragment_permission" >
+        <action
+            android:id="@+id/action_permissionFragment_to_IntroFragment"
+            app:destination="@id/IntroFragment" />
+    </fragment>
 </navigation>

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bitpunchlab.android.topdf.R
 import com.bitpunchlab.android.topdf.database.PDFDatabase
 import com.bitpunchlab.android.topdf.databinding.FragmentJobListBinding
@@ -50,10 +51,21 @@ class JobListFragment : Fragment() {
 
         jobsViewModel.allJobs.observe(viewLifecycleOwner, Observer { jobList ->
             jobList?.let {
-                //Log.i(TAG, "job list changed observed")
-                //Log.i(TAG, "job list $jobList")
                 jobAdapter.submitList(jobList)
                 jobAdapter.notifyDataSetChanged()
+            }
+        })
+
+        jobsViewModel.chosenJob.observe(viewLifecycleOwner, Observer { job ->
+            job?.let {
+                val bundle = Bundle()
+                bundle.putParcelable("pdfJob", job)
+                Log.i("navigate observer", job.toString())
+                findNavController().navigate(
+                    R.id.action_jobListFragment_to_MainFragment,
+                    bundle
+                )
+                jobsViewModel.doneNavigating()
             }
         })
 
