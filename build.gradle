@@ -8,3 +8,11 @@ plugins {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+//android {
+//    buildTypes {
+//        release {
+//            debuggable false
+//        }
+//    }
+//}

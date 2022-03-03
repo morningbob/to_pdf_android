@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="imageItem"
+            type="com.bitpunchlab.android.topdf.models.ImageItem" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+
+             />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="1"/>
+
+    </LinearLayout>
+    <!--
+    <variable
+            name="imageClickListener"
+            type="com.bitpunchlab.android.topdf.images.ImageListener" />
+
+            app:loadImage="@{imageItem.imageUri}"
+
+            android:onClick="@{()-> imageClickListener.onClick(imageItem, position)}"
+
+            -->
+</layout>

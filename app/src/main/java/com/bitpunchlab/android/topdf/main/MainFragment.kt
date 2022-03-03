@@ -42,11 +42,11 @@ class MainFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    var imageFile: File? = null
+    private var imageFile: File? = null
     lateinit var currentPhotoPath: String
-    lateinit var uriFilePath: Uri
-    var imageBitmap = MutableLiveData<Bitmap?>()
-    lateinit var currentJob: PDFJob
+    private lateinit var uriFilePath: Uri
+    private var imageBitmap = MutableLiveData<Bitmap?>()
+    private lateinit var currentJob: PDFJob
     private lateinit var coroutineScope: CoroutineScope
     private lateinit var database: PDFDatabase
 
@@ -120,6 +120,7 @@ class MainFragment : Fragment() {
                 || super.onOptionsItemSelected(item)
     }
 
+    // capture photo function utils
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
@@ -137,7 +138,7 @@ class MainFragment : Fragment() {
                 imageFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
                         requireContext(),
-                        "com.bitpunchlab.android.booktool.fileprovider",
+                        "com.bitpunchlab.android.topdf.fileprovider",
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -148,6 +149,7 @@ class MainFragment : Fragment() {
         }
     }
 
+    // capture photo function utils
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
@@ -169,6 +171,7 @@ class MainFragment : Fragment() {
         }
     }
 
+    // capture photo function utils
     private fun getPhotoFromUri() : Bitmap? {
 
         uriFilePath = Uri.fromFile(imageFile)
@@ -191,6 +194,7 @@ class MainFragment : Fragment() {
         return imageBitmap.value
     }
 
+    // capture photo function utils
     private fun createImageItemAndInsert(bitmap: Bitmap?) {
         if (bitmap != null) {
             val imageItem = ImageItem(imageUri = uriFilePath.toString(), jobId = currentJob.jobId)
