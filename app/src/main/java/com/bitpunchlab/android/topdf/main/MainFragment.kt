@@ -43,7 +43,7 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var imageFile: File? = null
-    lateinit var currentPhotoPath: String
+    //lateinit var currentPhotoPath: String
     private lateinit var uriFilePath: Uri
     private var imageBitmap = MutableLiveData<Bitmap?>()
     private lateinit var currentJob: PDFJob
@@ -163,12 +163,12 @@ class MainFragment : Fragment() {
             "JPEG_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
-        ).apply {
+        )//.apply {
             // Save a file: path for use with ACTION_VIEW intents
             // absolutePath is from image.get
             //currentPhotoPath = absolutePath //"file:"
             //Log.i("file path", currentPhotoPath)
-        }
+        //}
     }
 
     // capture photo function utils
