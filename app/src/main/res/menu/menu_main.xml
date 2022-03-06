@@ -9,5 +9,10 @@
         android:title="Display all jobs"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/imageListFragment"
+        android:orderInCategory="100"
+        android:title="Display all images"
+        app:showAsAction="never" />
 
 </menu>

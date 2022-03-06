@@ -16,12 +16,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.bitpunchlab.android.topdf.R
 import com.bitpunchlab.android.topdf.database.PDFDatabase
 import com.bitpunchlab.android.topdf.databinding.FragmentMainBinding
+import com.bitpunchlab.android.topdf.joblist.JobsViewModel
+import com.bitpunchlab.android.topdf.joblist.JobsViewModelFactory
 import com.bitpunchlab.android.topdf.models.ImageItem
 import com.bitpunchlab.android.topdf.models.PDFJob
 import kotlinx.coroutines.CoroutineScope
@@ -49,6 +52,7 @@ class MainFragment : Fragment() {
     private lateinit var currentJob: PDFJob
     private lateinit var coroutineScope: CoroutineScope
     private lateinit var database: PDFDatabase
+    private lateinit var jobsViewModel: JobsViewModel
 
     private val requestPhotoCaptureResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -78,6 +82,10 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         coroutineScope = CoroutineScope(Dispatchers.IO)
         database = PDFDatabase.getInstance(context)
+        jobsViewModel = ViewModelProvider(requireActivity(), JobsViewModelFactory(database))
+            .get(JobsViewModel::class.java)
+        // update current job for other fragments to use
+        jobsViewModel.currentJobId = currentJob.jobId
 
         binding.captureButton.setOnClickListener {
             dispatchTakePictureIntent()

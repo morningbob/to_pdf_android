@@ -36,6 +36,9 @@
         <argument
             android:name="pdfJob"
             app:argType="com.bitpunchlab.android.topdf.models.PDFJob" />
+        <action
+            android:id="@+id/action_MainFragment_to_imageListFragment"
+            app:destination="@id/imageListFragment" />
     </fragment>
     <fragment
         android:id="@+id/createJobFragment"
@@ -63,4 +66,8 @@
             android:id="@+id/action_permissionFragment_to_IntroFragment"
             app:destination="@id/IntroFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/imageListFragment"
+        android:name="com.bitpunchlab.android.topdf.images.ImageListFragment"
+        android:label="ImageListFragment" />
 </navigation>

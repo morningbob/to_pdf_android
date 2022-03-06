@@ -17,7 +17,7 @@ class JobListAdapter(clickListener: JobListListener) : GenericRecyclerAdapter<PD
             override fun bindData(
                 item: PDFJob,
                 binding: ViewDataBinding,
-                onClickListener: GenericListener<PDFJob>
+                onClickListener: GenericListener<PDFJob>?
             ) {
                 (binding as JobListItemBinding).clickListener = clickListener
                 binding.job = item

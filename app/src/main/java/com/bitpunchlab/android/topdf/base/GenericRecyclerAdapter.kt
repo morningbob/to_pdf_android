@@ -14,7 +14,7 @@ import com.bitpunchlab.android.topdf.models.PDFJob
 
 abstract class GenericRecyclerAdapter<T: Any>(
     //private val onClickListener: GenericListener<T>,
-    private val onClickListener: GenericListener<T>,
+    private val onClickListener: GenericListener<T>?,
     compareItems: (old: T, new: T) -> Boolean,
     compareContents: (old: T, new: T) -> Boolean,
     private val bindingInter: GenericRecyclerBindingInterface<T>,
@@ -30,15 +30,25 @@ abstract class GenericRecyclerAdapter<T: Any>(
 
     override fun onBindViewHolder(holder: GenericViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, bindingInter, onClickListener)
+        if (onClickListener != null) {
+            holder.bind(item, bindingInter, onClickListener)
+        } else {
+            holder.bind(item, bindingInter, null)
+        }
+
     }
 }
 
 class GenericViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
     fun <T: Any> bind(
         item: T,
-        bindingInterface: GenericRecyclerBindingInterface<T>, onClickListenr: GenericListener<T>)
-            = bindingInterface.bindData(item, binding, onClickListenr)
+        bindingInterface: GenericRecyclerBindingInterface<T>, onClickListenr: GenericListener<T>?) {
+            if (onClickListenr != null) {
+                bindingInterface.bindData(item, binding, onClickListenr)
+            } else {
+                bindingInterface.bindData(item, binding, null)
+            }
+    }
 }
 
 class GenericDiffCallback<T>(
@@ -53,7 +63,7 @@ class GenericDiffCallback<T>(
 }
 
 interface GenericRecyclerBindingInterface<T: Any> {
-    fun bindData(item: T, binding: ViewDataBinding, onClickListener: GenericListener<T>)
+    fun bindData(item: T, binding: ViewDataBinding, onClickListener: GenericListener<T>?)
 }
 
 open abstract class GenericListener<T>(val clickListener: (T) -> Unit) {
