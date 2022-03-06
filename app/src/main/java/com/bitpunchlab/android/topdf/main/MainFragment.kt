@@ -77,15 +77,18 @@ class MainFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        currentJob = requireArguments().getParcelable<PDFJob>("pdfJob") as PDFJob
-        setHasOptionsMenu(true)
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
-        coroutineScope = CoroutineScope(Dispatchers.IO)
         database = PDFDatabase.getInstance(context)
         jobsViewModel = ViewModelProvider(requireActivity(), JobsViewModelFactory(database))
             .get(JobsViewModel::class.java)
-        // update current job for other fragments to use
-        jobsViewModel.currentJobId = currentJob.jobId
+        val job = requireArguments().getParcelable<PDFJob>("pdfJob") as PDFJob
+        if (job != null) {
+            currentJob = job
+        } else {
+            currentJob = jobsViewModel.currentJob!!
+        }
+        setHasOptionsMenu(true)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        coroutineScope = CoroutineScope(Dispatchers.IO)
 
         binding.captureButton.setOnClickListener {
             dispatchTakePictureIntent()
@@ -93,6 +96,14 @@ class MainFragment : Fragment() {
 
         binding.createJobButton.setOnClickListener {
             findNavController().navigate(R.id.action_MainFragment_to_createJobFragment)
+        }
+
+        binding.displayImagesButton.setOnClickListener {
+            findNavController().navigate(R.id.action_MainFragment_to_imageListFragment)
+        }
+
+        binding.displayJobsButton.setOnClickListener {
+            findNavController().navigate(R.id.action_MainFragment_to_jobListFragment)
         }
 
         imageBitmap.observe(viewLifecycleOwner, androidx.lifecycle.Observer { image ->

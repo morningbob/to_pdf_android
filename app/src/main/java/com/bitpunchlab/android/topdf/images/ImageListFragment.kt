@@ -2,13 +2,13 @@ package com.bitpunchlab.android.topdf.images
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.bitpunchlab.android.topdf.R
 import com.bitpunchlab.android.topdf.database.PDFDatabase
 import com.bitpunchlab.android.topdf.databinding.FragmentImageListBinding
@@ -38,7 +38,7 @@ class ImageListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //setHasOptionsMenu(true)
+        setHasOptionsMenu(true)
         _binding = FragmentImageListBinding.inflate(inflater, container, false)
         database = PDFDatabase.getInstance(context)
         jobsViewModel = ViewModelProvider(requireActivity(), JobsViewModelFactory(database))
@@ -47,12 +47,12 @@ class ImageListFragment : Fragment() {
         binding.imagesRecycler.adapter = imageAdapter
 
         // get all the images of the job
-        jobsViewModel.allImagesOfJob =  database.imageDAO.getAllImagesOfJob(jobsViewModel.currentJobId!!)
+        jobsViewModel.allImagesOfJob =  database.imageDAO.getAllImagesOfJob(jobsViewModel.currentJob!!.jobId)
 
         jobsViewModel.allImagesOfJob.observe(viewLifecycleOwner, Observer { imagelist ->
             imagelist?.let {
-                Log.i(TAG,
-                    "image list change observed, image list is not null, imagelist size ${imagelist.size}")
+                //Log.i(TAG,
+                //    "image list change observed, image list is not null, imagelist size ${imagelist.size}")
                 imageAdapter.submitList(imagelist)
                 imageAdapter.notifyDataSetChanged()
             }
@@ -61,5 +61,16 @@ class ImageListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_display_images, menu)
+        //menu.findItem(R.id.MainFragment).isVisible = false
+        //menu.findItem(R.id.displayImagesFragment).isVisible = false
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(item,
+            requireView().findNavController())
+                || super.onOptionsItemSelected(item)
+    }
 }

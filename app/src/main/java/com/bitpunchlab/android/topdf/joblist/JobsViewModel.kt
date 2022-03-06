@@ -17,15 +17,13 @@ class JobsViewModel(private val database: PDFDatabase) : ViewModel() {
     val chosenJob : LiveData<PDFJob?>
         get() = _chosenJob
 
-    //var _allImagesOfJob = MutableLiveData<List<ImageItem>>()
-    //val allImagesOfJob get() = _allImagesOfJob
     lateinit var allImagesOfJob : LiveData<List<ImageItem>>
 
     fun getAllImagesOfJob(jobId: Long) {
         //_allImagesOfJob = database.imageDAO.getAllImagesOfJob(jobId) as MutableLiveData<List<ImageItem>>
     }
 
-    var currentJobId: Long? = null
+    var currentJob: PDFJob? = null
 
     fun onJobClicked(job: PDFJob) {
         _chosenJob.value = job

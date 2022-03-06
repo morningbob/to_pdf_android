@@ -24,7 +24,6 @@ class JobListFragment : Fragment() {
 
     private var _binding: FragmentJobListBinding? = null
     private val binding get() = _binding!!
-    //private lateinit var jobAdapter: JobAdapter
     private lateinit var jobAdapter: JobListAdapter
     private lateinit var jobsViewModel: JobsViewModel
     private lateinit var database: PDFDatabase
@@ -64,6 +63,8 @@ class JobListFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putParcelable("pdfJob", job)
                 Log.i("navigate observer", job.toString())
+                // update current job for the other fragments
+                jobsViewModel.currentJob = job
                 findNavController().navigate(
                     R.id.action_jobListFragment_to_MainFragment,
                     bundle

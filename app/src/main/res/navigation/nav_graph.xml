@@ -35,10 +35,14 @@
             app:destination="@id/createJobFragment" />
         <argument
             android:name="pdfJob"
-            app:argType="com.bitpunchlab.android.topdf.models.PDFJob" />
+            app:argType="com.bitpunchlab.android.topdf.models.PDFJob"
+            app:nullable="true" />
         <action
             android:id="@+id/action_MainFragment_to_imageListFragment"
             app:destination="@id/imageListFragment" />
+        <action
+            android:id="@+id/action_MainFragment_to_jobListFragment"
+            app:destination="@id/jobListFragment" />
     </fragment>
     <fragment
         android:id="@+id/createJobFragment"

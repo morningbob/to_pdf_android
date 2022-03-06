@@ -7,5 +7,4 @@
         android:orderInCategory="100"
         android:title="Display all jobs"
         app:showAsAction="never" />
-
 </menu>

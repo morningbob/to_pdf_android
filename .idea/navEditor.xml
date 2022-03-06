@@ -45,7 +45,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="17" />
-                            <option name="y" value="-27" />
+                            <option name="y" value="-29" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -56,6 +56,11 @@
                               </value>
                             </entry>
                             <entry key="action_MainFragment_to_createJobFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_MainFragment_to_imageListFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
