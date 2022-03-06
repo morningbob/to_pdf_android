@@ -9,7 +9,7 @@
 
         <variable
             name="clickListener"
-            type="com.bitpunchlab.android.topdf.joblist.JobListener" />
+            type="com.bitpunchlab.android.topdf.joblist.JobListListener" />
     </data>
 
     <LinearLayout

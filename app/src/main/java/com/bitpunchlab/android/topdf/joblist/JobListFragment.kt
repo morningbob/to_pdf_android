@@ -10,8 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bitpunchlab.android.topdf.R
+import com.bitpunchlab.android.topdf.base.GenericListener
 import com.bitpunchlab.android.topdf.database.PDFDatabase
 import com.bitpunchlab.android.topdf.databinding.FragmentJobListBinding
+import com.bitpunchlab.android.topdf.models.PDFJob
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -22,7 +24,8 @@ class JobListFragment : Fragment() {
 
     private var _binding: FragmentJobListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var jobAdapter: JobAdapter
+    //private lateinit var jobAdapter: JobAdapter
+    private lateinit var jobAdapter: JobListAdapter
     private lateinit var jobsViewModel: JobsViewModel
     private lateinit var database: PDFDatabase
     private lateinit var coroutineScope: CoroutineScope
@@ -42,7 +45,7 @@ class JobListFragment : Fragment() {
         jobsViewModel = ViewModelProvider(requireActivity(), JobsViewModelFactory(database))
             .get(JobsViewModel::class.java)
 
-        jobAdapter = JobAdapter(JobListener { job ->
+        jobAdapter = JobListAdapter(JobListListener { job ->
             jobsViewModel.onJobClicked(job)
             Log.i(TAG, "job clicked: ${job.jobName}")
         })

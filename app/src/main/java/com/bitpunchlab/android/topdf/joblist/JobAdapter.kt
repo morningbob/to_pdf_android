@@ -37,7 +37,7 @@ class JobViewHolder(val binding: JobListItemBinding) :
 
     fun bind(clickListener: JobListener, item: PDFJob) {
         binding.job = item
-        binding.clickListener = clickListener
+        //binding.clickListener = clickListener
         binding.executePendingBindings()
     }
 
