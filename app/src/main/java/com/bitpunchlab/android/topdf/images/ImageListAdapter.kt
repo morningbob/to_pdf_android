@@ -24,4 +24,21 @@ class ImageListAdapter : GenericRecyclerAdapter<ImageItem>(
 
     }
 ) {
+
+    fun deleteImage(target: Int) {
+        val imageList = currentList.toMutableList()
+        imageList.removeAt(target)
+        notifyItemRemoved(target)
+        submitList(imageList)
+        //return true
+    }
+
+    private fun showUndoSnackbar() {
+
+    }
+
+    private fun undoDelete() {
+
+    }
 }
+

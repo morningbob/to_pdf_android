@@ -10,5 +10,6 @@
     <color name="green_base">#45a366</color>
     <color name="light_green">#c5e8d1</color>
     <color name="background_green">#d5ebdd</color>
+    <color name="warning_yellow">#f4fc83</color>
 
 </resources>
