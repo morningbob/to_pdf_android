@@ -1,5 +1,6 @@
 package com.bitpunchlab.android.topdf.joblist
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,11 +20,9 @@ class JobsViewModel(private val database: PDFDatabase) : ViewModel() {
 
     lateinit var allImagesOfJob : LiveData<List<ImageItem>>
 
-    fun getAllImagesOfJob(jobId: Long) {
-        //_allImagesOfJob = database.imageDAO.getAllImagesOfJob(jobId) as MutableLiveData<List<ImageItem>>
-    }
-
     var currentJob: PDFJob? = null
+
+    var imageBitmaps = MutableLiveData<List<Bitmap?>>()
 
     fun onJobClicked(job: PDFJob) {
         _chosenJob.value = job

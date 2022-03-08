@@ -1,6 +1,7 @@
 package com.bitpunchlab.android.topdf.main
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -13,7 +14,9 @@ import android.util.Log
 import android.view.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +30,8 @@ import com.bitpunchlab.android.topdf.joblist.JobsViewModel
 import com.bitpunchlab.android.topdf.joblist.JobsViewModelFactory
 import com.bitpunchlab.android.topdf.models.ImageItem
 import com.bitpunchlab.android.topdf.models.PDFJob
+import com.bitpunchlab.android.topdf.processingtasks.CreatePDFTask
+import com.bitpunchlab.android.topdf.utils.AppUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -45,22 +50,23 @@ class MainFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private var imageFile: File? = null
-    //lateinit var currentPhotoPath: String
-    private lateinit var uriFilePath: Uri
+    private var imageFileSaved: File? = null
+    //private lateinit var uriFilePath: Uri
     private var imageBitmap = MutableLiveData<Bitmap?>()
     private lateinit var currentJob: PDFJob
     private lateinit var coroutineScope: CoroutineScope
     private lateinit var database: PDFDatabase
     private lateinit var jobsViewModel: JobsViewModel
+    private lateinit var createPDFTask: CreatePDFTask
 
     private val requestPhotoCaptureResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 Log.i(TAG, "photo captured")
-                createImageItemAndInsert(getPhotoFromUri())
-                //binding.mainPlaceholderImage.setImageBitmap()
+                val uri = Uri.fromFile(imageFileSaved)
+                imageBitmap.value = AppUtils.getPhotoFromUri(uri, requireContext())
+                createImageItemAndInsert(imageBitmap.value, Uri.fromFile(imageFileSaved))
             } else {
                 Log.i(TAG, "failed to capture photo")
 
@@ -69,7 +75,7 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // make sure the app can use camera
+
     }
 
     @OptIn(InternalCoroutinesApi::class)
@@ -106,9 +112,31 @@ class MainFragment : Fragment() {
             findNavController().navigate(R.id.action_MainFragment_to_jobListFragment)
         }
 
+        binding.createPdfButton.setOnClickListener {
+            // here we check if there is image first
+            if (jobsViewModel.allImagesOfJob.value != null &&
+                jobsViewModel.allImagesOfJob.value!!.isNotEmpty()) {
+                prepareImageBitmapsForPDF()
+            } else {
+                // show alert that no image to create pdf
+                noImageAlert()
+            }
+
+        }
+
         imageBitmap.observe(viewLifecycleOwner, androidx.lifecycle.Observer { image ->
             image?.let {
                 binding.mainPlaceholderImage.setImageBitmap(image)
+            }
+        })
+
+        jobsViewModel.imageBitmaps.observe(viewLifecycleOwner, androidx.lifecycle.Observer { bitmaps ->
+            bitmaps?.let {
+                if (jobsViewModel.allImagesOfJob.value!!.size == bitmaps.size) {
+                    // start to convert
+                    createPDFTask = CreatePDFTask(requireContext())
+                    createPDFTask.createDocumentCoroutine("XXX", jobsViewModel)
+                }
             }
         })
 
@@ -128,8 +156,6 @@ class MainFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_main, menu)
-        //menu.findItem(R.id.MainFragment).isVisible = false
-        //menu.findItem(R.id.displayImagesFragment).isVisible = false
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -145,7 +171,7 @@ class MainFragment : Fragment() {
             // Ensure that there's a camera activity to handle the intent
             takePictureIntent.resolveActivity(context?.packageManager!!)?.also {
                 // Create the File where the photo should go
-                imageFile =
+                imageFileSaved =
                     try {
                         createImageFile()
                     } catch (ex: IOException) {
@@ -154,7 +180,7 @@ class MainFragment : Fragment() {
                         null
                     }
                 // Continue only if the File was successfully created
-                imageFile?.also {
+                imageFileSaved?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
                         requireContext(),
                         "com.bitpunchlab.android.topdf.fileprovider",
@@ -182,41 +208,13 @@ class MainFragment : Fragment() {
             "JPEG_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
-        )//.apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            // absolutePath is from image.get
-            //currentPhotoPath = absolutePath //"file:"
-            //Log.i("file path", currentPhotoPath)
-        //}
+        )
     }
 
     // capture photo function utils
-    private fun getPhotoFromUri() : Bitmap? {
-
-        uriFilePath = Uri.fromFile(imageFile)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val imageCapturedSource: ImageDecoder.Source =
-                ImageDecoder.createSource(context?.contentResolver!!, uriFilePath)
-
-            imageBitmap.value = ImageDecoder.decodeBitmap(imageCapturedSource)
-
-        } else {
-            try {
-                imageBitmap.value = MediaStore.Images.Media.getBitmap(
-                    context?.contentResolver,
-                    uriFilePath
-                )
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-        return imageBitmap.value
-    }
-
-    // capture photo function utils
-    private fun createImageItemAndInsert(bitmap: Bitmap?) {
+    private fun createImageItemAndInsert(bitmap: Bitmap?, uri: Uri) {
         if (bitmap != null) {
-            val imageItem = ImageItem(imageUri = uriFilePath.toString(), jobId = currentJob.jobId)
+            val imageItem = ImageItem(imageUri = uri.toString(), jobId = currentJob.jobId)
             // save imageItem to database
             coroutineScope.launch {
                 database.imageDAO.insert(imageItem)
@@ -225,6 +223,27 @@ class MainFragment : Fragment() {
         } else {
             Log.i(TAG, "image is null")
         }
+    }
+
+    // need to handle if can't get the image from uri
+    private fun prepareImageBitmapsForPDF() {
+        jobsViewModel.imageBitmaps.value = jobsViewModel.allImagesOfJob.value?.map { imageItem ->
+            AppUtils.getPhotoFromUri(imageItem.imageUri.toUri(), requireContext())
+        }
+
+    }
+
+    private fun noImageAlert() {
+        val imageAlert = AlertDialog.Builder(requireContext())
+
+        imageAlert.setTitle("Create PDF document")
+        imageAlert.setMessage("There is no image to create the pdf document.")
+
+        imageAlert.setPositiveButton("OK",
+            DialogInterface.OnClickListener() { dialog, button ->
+            })
+
+        imageAlert.show()
     }
 
 }
