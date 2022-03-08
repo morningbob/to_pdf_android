@@ -6,10 +6,13 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bitpunchlab.android.topdf.R
+import com.bitpunchlab.android.topdf.models.ImageItem
+import kotlin.properties.Delegates
 
 class ImageItemTouchHelper : ItemTouchHelper.Callback {
 
@@ -17,6 +20,8 @@ class ImageItemTouchHelper : ItemTouchHelper.Callback {
     var icon: Drawable
     var context : Context
     var background: Drawable
+    var imageDeleted = MutableLiveData<ImageItem>()
+    var imagePosition : Int? = null
 
     constructor(adapter: ImageListAdapter, theContext: Context) {
         imageAdapter = adapter
@@ -49,9 +54,9 @@ class ImageItemTouchHelper : ItemTouchHelper.Callback {
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.adapterPosition
         if (direction == START || direction == END) {
-            // confirm deletion
             // call adapter to delete
-            imageAdapter.deleteImage(position)
+            imageDeleted.value = imageAdapter.deleteImage(position)
+            imagePosition = position
         }
     }
 

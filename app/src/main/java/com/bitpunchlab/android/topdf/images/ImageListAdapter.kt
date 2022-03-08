@@ -1,5 +1,6 @@
 package com.bitpunchlab.android.topdf.images
 
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.bitpunchlab.android.topdf.R
 import com.bitpunchlab.android.topdf.base.GenericListener
@@ -7,6 +8,7 @@ import com.bitpunchlab.android.topdf.base.GenericRecyclerAdapter
 import com.bitpunchlab.android.topdf.base.GenericRecyclerBindingInterface
 import com.bitpunchlab.android.topdf.databinding.ImageListItemBinding
 import com.bitpunchlab.android.topdf.models.ImageItem
+import com.google.android.material.snackbar.Snackbar
 
 class ImageListAdapter : GenericRecyclerAdapter<ImageItem>(
     layoutID = R.layout.image_list_item,
@@ -25,20 +27,23 @@ class ImageListAdapter : GenericRecyclerAdapter<ImageItem>(
     }
 ) {
 
-    fun deleteImage(target: Int) {
+    fun deleteImage(target: Int) : ImageItem {
         val imageList = currentList.toMutableList()
+        val image = imageList[target]
         imageList.removeAt(target)
         notifyItemRemoved(target)
+        //notifyItemRangeRemoved(target, 1)
         submitList(imageList)
-        //return true
+        return image
     }
 
-    private fun showUndoSnackbar() {
-
+    fun addImage(target: Int, image: ImageItem) {
+        val imageList = currentList.toMutableList()
+        imageList.add(target, image)
+        notifyItemInserted(target)
+        //notifyItemRangeInserted(target, 1)
+        submitList(imageList)
     }
 
-    private fun undoDelete() {
-
-    }
 }
 

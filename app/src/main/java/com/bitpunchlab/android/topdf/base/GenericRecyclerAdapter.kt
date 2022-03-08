@@ -13,7 +13,6 @@ import com.bitpunchlab.android.topdf.generated.callback.OnClickListener
 import com.bitpunchlab.android.topdf.models.PDFJob
 
 abstract class GenericRecyclerAdapter<T: Any>(
-    //private val onClickListener: GenericListener<T>,
     private val onClickListener: GenericListener<T>?,
     compareItems: (old: T, new: T) -> Boolean,
     compareContents: (old: T, new: T) -> Boolean,
@@ -22,7 +21,6 @@ abstract class GenericRecyclerAdapter<T: Any>(
     ListAdapter<T, GenericViewHolder>(GenericDiffCallback(compareItems, compareContents)) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        //val view = LayoutInflater.from(parent.context).inflate(layoutID, parent, false)
         val binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, layoutID
             , parent, false)
         return GenericViewHolder(binding)
@@ -48,6 +46,7 @@ class GenericViewHolder(val binding: ViewDataBinding) : RecyclerView.ViewHolder(
             } else {
                 bindingInterface.bindData(item, binding, null)
             }
+        binding.executePendingBindings()
     }
 }
 
@@ -67,7 +66,6 @@ interface GenericRecyclerBindingInterface<T: Any> {
 }
 
 open abstract class GenericListener<T>(val clickListener: (T) -> Unit) {
-    //fun onClick(item: T) = clickListener(item)
 }
 
 
