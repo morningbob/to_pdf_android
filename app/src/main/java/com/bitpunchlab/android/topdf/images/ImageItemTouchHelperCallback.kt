@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,10 +15,10 @@ import com.bitpunchlab.android.topdf.R
 import com.bitpunchlab.android.topdf.models.ImageItem
 import kotlin.properties.Delegates
 
-class ImageItemTouchHelper : ItemTouchHelper.Callback {
+class ImageItemTouchHelperCallback : ItemTouchHelper.Callback {
 
     var imageAdapter : ImageListAdapter
-    var icon: Drawable
+    //var icon: Drawable
     var context : Context
     var background: Drawable
     var imageDeleted = MutableLiveData<ImageItem>()
@@ -26,7 +27,7 @@ class ImageItemTouchHelper : ItemTouchHelper.Callback {
     constructor(adapter: ImageListAdapter, theContext: Context) {
         imageAdapter = adapter
         context = theContext
-        icon = ContextCompat.getDrawable(context, R.drawable.pdf_launcher)!!
+        //icon = ContextCompat.getDrawable(context, R.drawable.pdf_launcher)!!
         background = ColorDrawable(ContextCompat.getColor(
             context,
             R.color.warning_yellow
@@ -48,6 +49,12 @@ class ImageItemTouchHelper : ItemTouchHelper.Callback {
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
+        val adapter = recyclerView.adapter as ImageListAdapter
+        val from = viewHolder.adapterPosition
+        val to = target.adapterPosition
+        Log.i("from", from.toString())
+        Log.i("to", to.toString())
+        adapter.moveImage(from, to)
         return true
     }
 
@@ -62,6 +69,19 @@ class ImageItemTouchHelper : ItemTouchHelper.Callback {
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         super.onSelectedChanged(viewHolder, actionState)
+
+        when (actionState) {
+            ACTION_STATE_DRAG ->
+                viewHolder?.itemView?.setBackgroundColor(
+                    ContextCompat.getColor(
+                        viewHolder.itemView.context,
+                        R.color.warning_yellow
+                    )
+                )
+            ACTION_STATE_SWIPE -> 0
+
+            ACTION_STATE_IDLE -> 0
+        }
     }
 
     override fun onChildDraw(
@@ -85,15 +105,15 @@ class ImageItemTouchHelper : ItemTouchHelper.Callback {
         val itemView = viewHolder.itemView
         val backgroundCornerOffset = 20
 
-        val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
-        val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
-        val iconBottom = iconTop + icon.intrinsicHeight
+        //val iconMargin = (itemView.height - icon.intrinsicHeight) / 2
+        //val iconTop = itemView.top + (itemView.height - icon.intrinsicHeight) / 2
+        //val iconBottom = iconTop + icon.intrinsicHeight
 
         when {
             dX > 0 -> { // swipe to right
-                val iconLeft = itemView.left + iconMargin + icon.intrinsicWidth
-                val iconRight = itemView.left + iconMargin
-                icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                //val iconLeft = itemView.left + iconMargin + icon.intrinsicWidth
+                //val iconRight = itemView.left + iconMargin
+                //icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
 
                 background.setBounds(
                     itemView.left, itemView.top,
@@ -102,9 +122,9 @@ class ImageItemTouchHelper : ItemTouchHelper.Callback {
                 )
             }
             dX < 0 -> { // swipe to left
-                val iconLeft = itemView.right - iconMargin - icon.intrinsicWidth
-                val iconRight = itemView.right - iconMargin
-                icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+                //val iconLeft = itemView.right - iconMargin - icon.intrinsicWidth
+                //val iconRight = itemView.right - iconMargin
+                //icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
 
                 background.setBounds(
                     itemView.right + dX.toInt() - backgroundCornerOffset,
@@ -117,6 +137,6 @@ class ImageItemTouchHelper : ItemTouchHelper.Callback {
         }
 
         background.draw(c)
-        icon.draw(c)
+        //icon.draw(c)
     }
 }

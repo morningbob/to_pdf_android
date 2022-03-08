@@ -20,7 +20,10 @@ import com.bitpunchlab.android.topdf.joblist.JobsViewModel
 import com.bitpunchlab.android.topdf.joblist.JobsViewModelFactory
 import com.bitpunchlab.android.topdf.models.ImageItem
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.launch
 import java.lang.IndexOutOfBoundsException
 
 private const val TAG = "ImageListFragment"
@@ -33,7 +36,8 @@ class ImageListFragment : Fragment() {
     private lateinit var database: PDFDatabase
     private lateinit var imageAdapter: ImageListAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
-    private lateinit var itemTouchHelperCallback: ImageItemTouchHelper
+    private lateinit var itemTouchHelperCallback: ImageItemTouchHelperCallback
+    private lateinit var coroutineScope: CoroutineScope
     //private var imageDeletedPosition: Int? = null
     //private var imageDeleted = MutableLiveData<ImageItem>()
 
@@ -49,6 +53,7 @@ class ImageListFragment : Fragment() {
     ): View? {
         setHasOptionsMenu(true)
         _binding = FragmentImageListBinding.inflate(inflater, container, false)
+        coroutineScope = CoroutineScope(Dispatchers.IO)
         database = PDFDatabase.getInstance(context)
         jobsViewModel = ViewModelProvider(requireActivity(), JobsViewModelFactory(database))
             .get(JobsViewModel::class.java)
@@ -93,13 +98,39 @@ class ImageListFragment : Fragment() {
                 || super.onOptionsItemSelected(item)
     }
 
+    override fun onPause() {
+        super.onPause()
+        // update the images rank in the recyclerview in database
+        // check if the rank change, only update the one changed
+        val imagesList = imageAdapter.currentList.toMutableList()
+        val imagesToBeUpdated = imagesList.mapIndexed { index, image ->
+            if (index != image.rank) {
+                // update the rank
+                image.rank = index
+                image
+            }
+        }
+        // update the images
+        // this deals with the change in rank only
+        coroutineScope.launch {
+            database.imageDAO.insertAll(*imagesList.toTypedArray())
+            Log.i("onPause", "inserted all")
+        }
+        Log.i("onPause", imagesToBeUpdated.toString())
+    }
+
     private fun setupItemTouchHelper() {
-        itemTouchHelperCallback = ImageItemTouchHelper(imageAdapter, requireContext())
+        itemTouchHelperCallback = ImageItemTouchHelperCallback(imageAdapter, requireContext())
         itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.imagesRecycler)
     }
 
     private fun showUndoSnackbar() {
+        // here, we delete the image, we'll save it again if undo is pressed
+        coroutineScope.launch {
+            database.imageDAO.delete(itemTouchHelperCallback.imageDeleted.value!!)
+            Log.i("snackbar", "deleted")
+        }
         val imageItemView = binding.imageListLayout
         val snack = Snackbar.make(imageItemView, "Undo Delete?", Snackbar.LENGTH_LONG)
         snack.setAction("UNDO", SnackUndoListener())
@@ -111,7 +142,11 @@ class ImageListFragment : Fragment() {
             // undo the deletion
             imageAdapter.addImage(itemTouchHelperCallback.imagePosition!!,
                 itemTouchHelperCallback.imageDeleted.value!!)
-
+            // save it to database
+            coroutineScope.launch {
+                database.imageDAO.insert(itemTouchHelperCallback.imageDeleted.value!!)
+                Log.i("snackbar", "reinserted image")
+            }
         }
     }
 

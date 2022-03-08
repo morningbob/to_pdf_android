@@ -9,6 +9,7 @@ import com.bitpunchlab.android.topdf.base.GenericRecyclerBindingInterface
 import com.bitpunchlab.android.topdf.databinding.ImageListItemBinding
 import com.bitpunchlab.android.topdf.models.ImageItem
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 class ImageListAdapter : GenericRecyclerAdapter<ImageItem>(
     layoutID = R.layout.image_list_item,
@@ -43,6 +44,13 @@ class ImageListAdapter : GenericRecyclerAdapter<ImageItem>(
         notifyItemInserted(target)
         //notifyItemRangeInserted(target, 1)
         submitList(imageList)
+    }
+
+    fun moveImage(from: Int, to: Int) {
+        val imageList = currentList.toMutableList()
+        Collections.swap(imageList, from, to)
+        submitList(imageList)
+        notifyDataSetChanged()
     }
 
 }

@@ -11,7 +11,7 @@ data class ImageItem (
     @PrimaryKey(autoGenerate = true) val imageId: Long = 0L,
     var imageUri: String,
     var jobId: Long,
-
+    var rank: Int = 0
     ) : Parcelable
 
 
