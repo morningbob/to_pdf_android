@@ -70,6 +70,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_MainFragment_to_processingFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -92,6 +97,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="displayPDFFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-389" />
+                            <option name="y" value="60" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

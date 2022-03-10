@@ -18,7 +18,6 @@ class JobsViewModel(private val database: PDFDatabase) : ViewModel() {
     val chosenJob : LiveData<PDFJob?>
         get() = _chosenJob
 
-    //var _allImagesOfJob = MutableLiveData<List<ImageItem>>()
     lateinit var allImagesOfJob : LiveData<List<ImageItem>>
 
     var all = MutableLiveData<List<ImageItem>>()
@@ -27,11 +26,6 @@ class JobsViewModel(private val database: PDFDatabase) : ViewModel() {
 
     var imageBitmaps = MutableLiveData<List<Bitmap?>>()
 
-    init {
-        // here we initialized allImagesOfJob with a job id
-        // so it can be observed in processing fragment
-        //allImagesOfJob = database.imageDAO.getAllImagesOfJob()
-    }
 
     fun onJobClicked(job: PDFJob) {
         _chosenJob.value = job
@@ -40,9 +34,6 @@ class JobsViewModel(private val database: PDFDatabase) : ViewModel() {
     fun doneNavigating() {
         _chosenJob.value = null
     }
-
-
-
 }
 
 class JobsViewModelFactory(private val database: PDFDatabase)

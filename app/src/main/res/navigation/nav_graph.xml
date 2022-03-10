@@ -85,5 +85,19 @@
             android:name="pdfJob"
             app:argType="com.bitpunchlab.android.topdf.models.PDFJob"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_processingFragment_to_displayPDFFragment"
+            app:destination="@id/displayPDFFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayPDFFragment"
+        android:name="com.bitpunchlab.android.topdf.displayPDF.DisplayPDFFragment"
+        android:label="DisplayPDFFragment" >
+        <argument
+            android:name="filename"
+            app:argType="string" />
+        <argument
+            android:name="location"
+            app:argType="string" />
     </fragment>
 </navigation>

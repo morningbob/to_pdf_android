@@ -12,6 +12,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bitpunchlab.android.topdf.R
 import com.bitpunchlab.android.topdf.database.PDFDatabase
 import com.bitpunchlab.android.topdf.databinding.FragmentProcessingBinding
@@ -60,10 +61,12 @@ class ProcessingFragment : Fragment() {
         }
         // we first load the imageItems from the job
         imageItemToBeProcessed = database.imageDAO.getAllImagesOfJob(currentJob.jobId)
+        createPDFTask = CreatePDFTask(requireContext())
 
         // we need to wait for the imageItems to be fetched from database
         imageItemToBeProcessed.observe(viewLifecycleOwner, Observer { imageItems ->
             imageItems?.let {
+                Log.i("imageToBeProcessed", "loaded")
                 if (imageItems.isNotEmpty()) {
                     // get bitmaps from imageItems uri
                     // here we check if there is image first
@@ -78,10 +81,20 @@ class ProcessingFragment : Fragment() {
         jobsViewModel.imageBitmaps.observe(viewLifecycleOwner, androidx.lifecycle.Observer { bitmaps ->
             bitmaps?.let {
                 if (imageItemToBeProcessed.value!!.size == bitmaps.size) {
+                    Log.i("createTask", "started")
                     // start to convert
-                    createPDFTask = CreatePDFTask(requireContext())
                     createPDFTask.createDocumentCoroutine("XXX", jobsViewModel)
                 }
+            }
+        })
+
+        createPDFTask.done.observe(viewLifecycleOwner, Observer { value ->
+            if (value) {
+                val bundle = Bundle()
+                bundle.putString("filename", "XXX")
+                bundle.putString("location", createPDFTask.filePath)
+                Log.i("createTask", "done")
+                findNavController().navigate(R.id.action_processingFragment_to_displayPDFFragment, bundle)
             }
         })
 

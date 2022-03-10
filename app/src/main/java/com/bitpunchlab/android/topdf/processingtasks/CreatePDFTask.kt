@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.os.Environment
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.bitpunchlab.android.topdf.joblist.JobsViewModel
 import com.itextpdf.text.Document
 import com.itextpdf.text.Image
@@ -21,9 +22,11 @@ import java.io.IOException
 class CreatePDFTask(private val passedContext: Context) {
 
     private lateinit var coroutineScope: CoroutineScope
-    var document = Document()
+    private var document = Document()
     private lateinit var pdfWriter: PdfWriter
     private lateinit var jobsViewModel: JobsViewModel
+    var done = MutableLiveData<Boolean>(false)
+    var filePath = ""
 
     fun createDocumentCoroutine(filename: String, viewModel: JobsViewModel) {
         coroutineScope = CoroutineScope(Dispatchers.IO)
@@ -37,8 +40,11 @@ class CreatePDFTask(private val passedContext: Context) {
     private fun createDocument(filename: String) {
         val dirPath = passedContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString()
         Log.i("dirPath", dirPath)
+        Log.i("filename", filename)
+        filePath = "$dirPath/$filename.pdf"
         // get the pdfWriter for the document
-        val file = File("$dirPath/$filename.pdf")
+        done.postValue(false)
+        val file = File(filePath)
         pdfWriter = PdfWriter.getInstance(document, FileOutputStream(file))
         document.open()
     }
@@ -64,6 +70,7 @@ class CreatePDFTask(private val passedContext: Context) {
                     pdfWriter.close()
                     pdfOutputStream.close()
                     Log.i("convertToPDF", "document converted")
+                    done.postValue(true)
                 }
             } catch (e: IOException) {
                 Log.i("create pdf task", "error getting image")
