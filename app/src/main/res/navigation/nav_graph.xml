@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_MainFragment_to_jobListFragment"
             app:destination="@id/jobListFragment" />
+        <action
+            android:id="@+id/action_MainFragment_to_processingFragment"
+            app:destination="@id/processingFragment" />
     </fragment>
     <fragment
         android:id="@+id/createJobFragment"
@@ -74,4 +77,13 @@
         android:id="@+id/imageListFragment"
         android:name="com.bitpunchlab.android.topdf.images.ImageListFragment"
         android:label="ImageListFragment" />
+    <fragment
+        android:id="@+id/processingFragment"
+        android:name="com.bitpunchlab.android.topdf.processingPDF.ProcessingFragment"
+        android:label="ProcessingFragment" >
+        <argument
+            android:name="pdfJob"
+            app:argType="com.bitpunchlab.android.topdf.models.PDFJob"
+            app:nullable="true" />
+    </fragment>
 </navigation>

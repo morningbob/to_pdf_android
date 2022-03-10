@@ -57,7 +57,7 @@ class MainFragment : Fragment() {
     private lateinit var coroutineScope: CoroutineScope
     private lateinit var database: PDFDatabase
     private lateinit var jobsViewModel: JobsViewModel
-    private lateinit var createPDFTask: CreatePDFTask
+
 
     private val requestPhotoCaptureResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -113,15 +113,10 @@ class MainFragment : Fragment() {
         }
 
         binding.createPdfButton.setOnClickListener {
-            // here we check if there is image first
-            if (jobsViewModel.allImagesOfJob.value != null &&
-                jobsViewModel.allImagesOfJob.value!!.isNotEmpty()) {
-                prepareImageBitmapsForPDF()
-            } else {
-                // show alert that no image to create pdf
-                noImageAlert()
-            }
-
+            // we'll do the check of images in processing fragment
+            val bundle = Bundle()
+            bundle.putParcelable("pdfJob", currentJob)
+            findNavController().navigate(R.id.action_MainFragment_to_processingFragment, bundle)
         }
 
         imageBitmap.observe(viewLifecycleOwner, androidx.lifecycle.Observer { image ->
@@ -129,17 +124,6 @@ class MainFragment : Fragment() {
                 binding.mainPlaceholderImage.setImageBitmap(image)
             }
         })
-
-        jobsViewModel.imageBitmaps.observe(viewLifecycleOwner, androidx.lifecycle.Observer { bitmaps ->
-            bitmaps?.let {
-                if (jobsViewModel.allImagesOfJob.value!!.size == bitmaps.size) {
-                    // start to convert
-                    createPDFTask = CreatePDFTask(requireContext())
-                    createPDFTask.createDocumentCoroutine("XXX", jobsViewModel)
-                }
-            }
-        })
-
         return binding.root
 
     }
@@ -223,27 +207,6 @@ class MainFragment : Fragment() {
         } else {
             Log.i(TAG, "image is null")
         }
-    }
-
-    // need to handle if can't get the image from uri
-    private fun prepareImageBitmapsForPDF() {
-        jobsViewModel.imageBitmaps.value = jobsViewModel.allImagesOfJob.value?.map { imageItem ->
-            AppUtils.getPhotoFromUri(imageItem.imageUri.toUri(), requireContext())
-        }
-
-    }
-
-    private fun noImageAlert() {
-        val imageAlert = AlertDialog.Builder(requireContext())
-
-        imageAlert.setTitle("Create PDF document")
-        imageAlert.setMessage("There is no image to create the pdf document.")
-
-        imageAlert.setPositiveButton("OK",
-            DialogInterface.OnClickListener() { dialog, button ->
-            })
-
-        imageAlert.show()
     }
 
 }

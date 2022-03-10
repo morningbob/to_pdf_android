@@ -65,6 +65,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_MainFragment_to_jobListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -141,6 +146,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="processingFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-177" />
+                            <option name="y" value="366" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

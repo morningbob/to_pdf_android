@@ -66,7 +66,7 @@
                 android:id="@+id/create_pdf_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="display all pdf" />
+                android:text="create pdf" />
 
         </LinearLayout>
 

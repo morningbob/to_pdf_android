@@ -9,7 +9,9 @@ import com.itextpdf.text.Document
 import com.itextpdf.text.Image
 import com.itextpdf.text.pdf.PdfWriter
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -24,9 +26,11 @@ class CreatePDFTask(private val passedContext: Context) {
     private lateinit var jobsViewModel: JobsViewModel
 
     fun createDocumentCoroutine(filename: String, viewModel: JobsViewModel) {
+        coroutineScope = CoroutineScope(Dispatchers.IO)
         jobsViewModel = viewModel
         coroutineScope.launch {
-            createDocument(filename)
+                createDocument(filename)
+                convertToPDF()
         }
     }
 
@@ -59,6 +63,7 @@ class CreatePDFTask(private val passedContext: Context) {
                     document.close()
                     pdfWriter.close()
                     pdfOutputStream.close()
+                    Log.i("convertToPDF", "document converted")
                 }
             } catch (e: IOException) {
                 Log.i("create pdf task", "error getting image")
