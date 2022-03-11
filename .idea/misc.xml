@@ -15,10 +15,13 @@
         <entry key="app/src/main/res/layout/image_list_item.xml" value="0.14437689969604864" />
         <entry key="app/src/main/res/layout/job_list_item.xml" value="0.14437689969604864" />
         <entry key="app/src/main/res/layout/pdf_list_item.xml" value="0.14437689969604864" />
+        <entry key="app/src/main/res/menu/menu_create_job.xml" value="0.2923076923076923" />
         <entry key="app/src/main/res/menu/menu_display_images.xml" value="0.2923076923076923" />
         <entry key="app/src/main/res/menu/menu_display_jobs.xml" value="0.2923076923076923" />
+        <entry key="app/src/main/res/menu/menu_display_pdfs.xml" value="0.2923076923076923" />
         <entry key="app/src/main/res/menu/menu_intro.xml" value="0.2923076923076923" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.2923076923076923" />
+        <entry key="app/src/main/res/menu/menu_pdf_list.xml" value="0.2923076923076923" />
         <entry key="app/src/main/res/xml/file_pahts.xml" value="0.13489583333333333" />
       </map>
     </option>

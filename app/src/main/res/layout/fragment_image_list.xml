@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_green">
 
     <data>
         <variable
@@ -12,11 +13,10 @@
     <LinearLayout
         android:id="@+id/imageListLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
         tools:context=".DisplayImagesFragment"
         android:layout_marginTop="20dp"
-        android:background="@color/background_green"
         android:orientation="vertical">
 
         <TextView
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{pdfJob.jobName}"
-            android:textColor="@color/black"
+            android:textColor="@color/text_green"
             android:textStyle="bold"
             android:textSize="25sp"
             android:layout_marginTop="10dp"
@@ -32,17 +32,6 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:textAlignment="center" />
-
-        <Button
-            android:id="@+id/deleteImageButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="10dp"
-            android:text="delete"
-            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/images_recycler"

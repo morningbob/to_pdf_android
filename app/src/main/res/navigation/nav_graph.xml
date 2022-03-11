@@ -73,7 +73,7 @@
     <fragment
         android:id="@+id/permissionFragment"
         android:name="com.bitpunchlab.android.topdf.intro.PermissionFragment"
-        android:label="To PDF"
+        android:label="Permissions"
         tools:layout="@layout/fragment_permission" >
         <action
             android:id="@+id/action_permissionFragment_to_IntroFragment"
@@ -82,11 +82,11 @@
     <fragment
         android:id="@+id/imageListFragment"
         android:name="com.bitpunchlab.android.topdf.images.ImageListFragment"
-        android:label="ImageListFragment" />
+        android:label="Images" />
     <fragment
         android:id="@+id/processingFragment"
         android:name="com.bitpunchlab.android.topdf.processingPDF.ProcessingFragment"
-        android:label="ProcessingFragment" >
+        android:label="Creating PDF" >
         <argument
             android:name="pdfJob"
             app:argType="com.bitpunchlab.android.topdf.models.PDFJob"
@@ -98,7 +98,7 @@
     <fragment
         android:id="@+id/displayPDFFragment"
         android:name="com.bitpunchlab.android.topdf.displayPDF.DisplayPDFFragment"
-        android:label="DisplayPDFFragment" >
+        android:label="PDF" >
         <argument
             android:name="filename"
             app:argType="string" />
@@ -106,7 +106,7 @@
     <fragment
         android:id="@+id/PDFListFragment"
         android:name="com.bitpunchlab.android.topdf.displayPDF.PDFListFragment"
-        android:label="PDFListFragment" >
+        android:label="PDFs" >
         <action
             android:id="@+id/action_PDFListFragment_to_displayPDFFragment"
             app:destination="@id/displayPDFFragment" />

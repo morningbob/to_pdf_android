@@ -11,5 +11,6 @@
     <color name="light_green">#c5e8d1</color>
     <color name="background_green">#d5ebdd</color>
     <color name="warning_yellow">#f4fc83</color>
+    <color name="text_green">#07522c</color>
 
 </resources>

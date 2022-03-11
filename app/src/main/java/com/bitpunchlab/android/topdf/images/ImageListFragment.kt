@@ -38,8 +38,6 @@ class ImageListFragment : Fragment() {
     private lateinit var itemTouchHelper: ItemTouchHelper
     private lateinit var itemTouchHelperCallback: ImageItemTouchHelperCallback
     private lateinit var coroutineScope: CoroutineScope
-    //private var imageDeletedPosition: Int? = null
-    //private var imageDeleted = MutableLiveData<ImageItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +58,8 @@ class ImageListFragment : Fragment() {
         imageAdapter = ImageListAdapter()
         binding.imagesRecycler.layoutManager = WrapContentLinearLayoutManager()
         binding.imagesRecycler.adapter = imageAdapter
+        binding.pdfJob = jobsViewModel.currentJob
+        //binding.jobName.text = jobsViewModel.currentJob!!.jobName
 
         setupItemTouchHelper()
 
@@ -87,8 +87,6 @@ class ImageListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_display_images, menu)
-        //menu.findItem(R.id.MainFragment).isVisible = false
-        //menu.findItem(R.id.displayImagesFragment).isVisible = false
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -98,15 +96,20 @@ class ImageListFragment : Fragment() {
                 || super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onPause() {
         super.onPause()
         // update the images rank in the recyclerview in database
         // check if the rank change, only update the one changed
         val imagesList = imageAdapter.currentList.toMutableList()
         val imagesToBeUpdated = imagesList.mapIndexed { index, image ->
-            if (index != image.rank) {
+            if (index != image.rank - 1) {
                 // update the rank
-                image.rank = index
+                image.rank = index + 1
                 image
             }
         }

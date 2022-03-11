@@ -95,6 +95,8 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         coroutineScope = CoroutineScope(Dispatchers.IO)
 
+        binding.jobName.text = currentJob.jobName
+
         binding.captureButton.setOnClickListener {
             dispatchTakePictureIntent()
         }

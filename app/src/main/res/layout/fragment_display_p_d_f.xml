@@ -6,6 +6,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background_green"
         tools:context=".displayPDF.DisplayPDFFragment">
 
         <TextView
@@ -13,10 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
-            android:textColor="@color/light_green"
+            android:textColor="@color/text_green"
             android:textStyle="bold"
             android:textSize="25sp"/>
 
