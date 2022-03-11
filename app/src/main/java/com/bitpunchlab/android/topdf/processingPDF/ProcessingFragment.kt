@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 
 class ProcessingFragment : Fragment() {
@@ -38,6 +40,8 @@ class ProcessingFragment : Fragment() {
     private lateinit var coroutineScope: CoroutineScope
     private lateinit var createPDFTask: CreatePDFTask
     private lateinit var imageItemToBeProcessed: LiveData<List<ImageItem>>
+    private var pdfName = MutableLiveData<String>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,28 +84,59 @@ class ProcessingFragment : Fragment() {
         // we need to wait for the bitmaps to be fetched from the database
         jobsViewModel.imageBitmaps.observe(viewLifecycleOwner, androidx.lifecycle.Observer { bitmaps ->
             bitmaps?.let {
-                if (imageItemToBeProcessed.value!!.size == bitmaps.size) {
+                if (pdfName.value != null) {
                     Log.i("createTask", "started")
                     // start to convert
-                    createPDFTask.createDocumentCoroutine("XXX", jobsViewModel)
+                    createPDFTask.createDocumentCoroutine(pdfName.value!!, jobsViewModel)
                 }
             }
         })
 
         createPDFTask.done.observe(viewLifecycleOwner, Observer { value ->
             if (value) {
-                val bundle = Bundle()
-                bundle.putString("filename", "XXX")
-                bundle.putString("location", createPDFTask.filePath)
-                Log.i("createTask", "done")
-                findNavController().navigate(R.id.action_processingFragment_to_displayPDFFragment, bundle)
+                // alert user, the process completed
+                doneAlert()
             }
         })
+
+
+
+        binding.submitButton.setOnClickListener {
+            pdfName.value = getPDFName()
+        }
+
+        // here I decided to do the processing before user enter the pdf name.
+        // until all the image bitmaps are loaded in JobsViewModel
+        // then, I see if I got a valid pdfName
+        // if so, and the bitmaps are loaded, we start the processing
+        // if not, we wait until the bitmaps are loaded,
+        // then start processing in the imageBitmap observable
+        // so, I got 2 places to start to process
+        pdfName.observe(viewLifecycleOwner, Observer { name ->
+            name?.let {
+                if (jobsViewModel.imageBitmaps.value != null) {
+                    createPDFTask.createDocumentCoroutine(pdfName.value!!, jobsViewModel)
+                }
+            }
+        })
+
 
         return binding.root
     }
 
+    private fun getPDFName() : String? {
+        val name = binding.jobNameEditText.text.toString()
+        val nameValidity = checkIfNameValid(name)
+        if (nameValidity) {
+            return name
+        }
+        return null
+    }
 
+    private fun checkIfNameValid(pdfName: String) : Boolean {
+        val regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]")
+        return !regex.matcher(pdfName).find()
+    }
 
     // need to handle if can't get the image from uri
     private fun prepareImageBitmapsForPDF() {
@@ -124,31 +159,23 @@ class ProcessingFragment : Fragment() {
         imageAlert.show()
     }
 
-}
-/*
-    jobsViewModel.allImagesOfJob.observe(requireActivity(), Observer { images ->
-            images?.let {
-                if (images.isNotEmpty()) {
-                    // get bitmaps from imageItems uri
-                    // here we check if there is image first
-                    if (jobsViewModel.allImagesOfJob.value != null &&
-                        jobsViewModel.allImagesOfJob.value!!.isNotEmpty()) {
-                        prepareImageBitmapsForPDF()
-                    } else {
-                        // show alert that no image to create pdf
-                        noImageAlert()
-                    }
-                }
-            }
-        })
+    private fun doneAlert() {
+        val doneAlert = AlertDialog.Builder(requireContext())
 
-    private fun retrieveAllImagesOfJob() {
-        coroutineScope.launch {
-            jobsViewModel.allImagesOfJob = database.imageDAO.getAllImagesOfJob(currentJob.jobId)
-            Log.i("retrieved images", jobsViewModel.allImagesOfJob.value!!.size.toString())
+        doneAlert.setTitle("PDF Document Created")
+        doneAlert.setCancelable(false)
+        doneAlert.setMessage("The PDF ${pdfName.value} was created.")
 
-        }
+        doneAlert.setPositiveButton("OK",
+            DialogInterface.OnClickListener() { dialog, button ->
+                val bundle = Bundle()
+                bundle.putString("filename", pdfName.value)
+                bundle.putString("location", createPDFTask.filePath)
+                Log.i("createTask", "done")
+                findNavController().navigate(R.id.action_processingFragment_to_displayPDFFragment, bundle)
+            })
+
+        doneAlert.show()
     }
 
-
- */
+}

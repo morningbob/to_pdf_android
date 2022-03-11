@@ -3,16 +3,39 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/background_green"
         tools:context=".processingPDF.ProcessingFragment">
-
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150sp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginRight="30sp"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:text="Please enter a job name: " />
 
-    </FrameLayout>
+        <EditText
+            android:id="@+id/jobNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginRight="30sp"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:layout_gravity="center"
+            android:text="submit" />
+
+    </LinearLayout>
 </layout>

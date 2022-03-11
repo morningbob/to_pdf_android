@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="pdfFile"
+            type="com.bitpunchlab.android.topdf.models.PDFItem" />
+        <variable
+            name="clickListener"
+            type="com.bitpunchlab.android.topdf.displayPDF.PDFListListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:onClick="@{()-> clickListener.onClick(pdfFile)}">
+
+        <TextView
+            android:id="@+id/pdfName"
+            android:layout_width="match_parent"
+
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/light_green"
+            android:text="@{pdfFile.fileName}"
+            android:textSize="25sp"/>
+
+    </LinearLayout>
+</layout>
