@@ -18,8 +18,8 @@ class ReadPDFTask(private val passedContext: Context) {
     private lateinit var coroutineScope: CoroutineScope
     var fileName = ""
     private lateinit var pdfFile: File
-    private var currentPageIndex = 0
-    private var pageCount = 0
+    var currentPageIndex = 0
+    var pageCount = 0
     private lateinit var pdfRenderer: PdfRenderer
     var resultPDFBitmap = MutableLiveData<Bitmap?>()
 
@@ -41,21 +41,21 @@ class ReadPDFTask(private val passedContext: Context) {
         coroutineScope = CoroutineScope(Dispatchers.IO)
         coroutineScope.launch {
             openPDFFile()
-            resultPDFBitmap.postValue(prepareCurrentPage())
+            prepareCurrentPage()
         }
     }
 
-    private fun prepareCurrentPage() : Bitmap? {
-        if (currentPageIndex < pageCount ) {
+    fun prepareCurrentPage() {
+        if (currentPageIndex < pageCount) {
             val currentPage = pdfRenderer.openPage(currentPageIndex)
+            Log.i("prepareCurPage", "cur page $currentPageIndex")
             val pdfBitmap =
                 Bitmap.createBitmap(currentPage.width, currentPage.height, Bitmap.Config.ARGB_8888)
             currentPage.render(pdfBitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
             currentPage.close()
-            return pdfBitmap
+            resultPDFBitmap.postValue(pdfBitmap)
         } else {
             Log.i("prepareCurrentPage", "end of pdf.")
-            return null
         }
 
     }

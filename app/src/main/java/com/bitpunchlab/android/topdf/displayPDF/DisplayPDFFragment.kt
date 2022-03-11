@@ -44,6 +44,26 @@ class DisplayPDFFragment : Fragment() {
             }
         })
 
+        binding.previousPageButton.setOnClickListener {
+            if (readPDFTask.currentPageIndex > 0) {
+                Log.i("previous button", "pageCount ${readPDFTask.pageCount} currentPage ${readPDFTask.currentPageIndex}")
+                readPDFTask.currentPageIndex -= 1
+                readPDFTask.prepareCurrentPage()
+            } else {
+                Log.i("previous button", "already in front page")
+            }
+        }
+
+        binding.nextPageButton.setOnClickListener {
+            if (readPDFTask.currentPageIndex < readPDFTask.pageCount - 1) {
+                Log.i("next button", "pageCount ${readPDFTask.pageCount} currentPage ${readPDFTask.currentPageIndex}")
+                readPDFTask.currentPageIndex += 1
+                readPDFTask.prepareCurrentPage()
+            } else {
+                Log.i("next button", "already at the end")
+            }
+        }
+
         return binding.root
     }
 
