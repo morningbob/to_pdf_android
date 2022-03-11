@@ -99,8 +99,6 @@ class ProcessingFragment : Fragment() {
             }
         })
 
-
-
         binding.submitButton.setOnClickListener {
             pdfName.value = getPDFName()
         }

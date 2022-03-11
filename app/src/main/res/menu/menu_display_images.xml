@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:title="Display all jobs"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/PDFListFragment"
+        android:orderInCategory="100"
+        android:title="Display all pdfs"
+        app:showAsAction="never" />
 </menu>

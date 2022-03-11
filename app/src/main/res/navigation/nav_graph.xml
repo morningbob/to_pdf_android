@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_IntroFragment_to_jobListFragment"
             app:destination="@id/jobListFragment" />
+        <action
+            android:id="@+id/action_IntroFragment_to_PDFListFragment"
+            app:destination="@id/PDFListFragment" />
     </fragment>
     <fragment
         android:id="@+id/MainFragment"
@@ -46,6 +49,9 @@
         <action
             android:id="@+id/action_MainFragment_to_processingFragment"
             app:destination="@id/processingFragment" />
+        <action
+            android:id="@+id/action_MainFragment_to_PDFListFragment"
+            app:destination="@id/PDFListFragment" />
     </fragment>
     <fragment
         android:id="@+id/createJobFragment"
@@ -96,8 +102,13 @@
         <argument
             android:name="filename"
             app:argType="string" />
-        <argument
-            android:name="location"
-            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/PDFListFragment"
+        android:name="com.bitpunchlab.android.topdf.displayPDF.PDFListFragment"
+        android:label="PDFListFragment" >
+        <action
+            android:id="@+id/action_PDFListFragment_to_displayPDFFragment"
+            app:destination="@id/displayPDFFragment" />
     </fragment>
 </navigation>

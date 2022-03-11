@@ -46,6 +46,7 @@ class IntroFragment : Fragment() {
 
         binding.displayPDFButton.setOnClickListener {
             // navigate to pdf list fragment if there is pdf created
+            findNavController().navigate(R.id.action_IntroFragment_to_PDFListFragment)
         }
 
         return binding.root

@@ -80,6 +80,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="PDFListFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-210" />
+                            <option name="y" value="-372" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="createJobFragment">
                     <value>
                       <LayoutPositions>
@@ -175,6 +187,15 @@
                             <option name="x" value="-177" />
                             <option name="y" value="366" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_processingFragment_to_displayPDFFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

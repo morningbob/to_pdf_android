@@ -16,7 +16,6 @@ class DisplayPDFFragment : Fragment() {
 
     private var _binding : FragmentDisplayPDFBinding? = null
     private val binding get() = _binding!!
-    private var filePath = ""
     private var fileName = ""
     private lateinit var readPDFTask: ReadPDFTask
 
@@ -31,7 +30,6 @@ class DisplayPDFFragment : Fragment() {
         _binding = FragmentDisplayPDFBinding.inflate(inflater, container, false)
 
         fileName = requireArguments().getString("filename").toString()
-        filePath = requireArguments().getString("location").toString()
 
         readPDFTask = ReadPDFTask(requireContext())
 

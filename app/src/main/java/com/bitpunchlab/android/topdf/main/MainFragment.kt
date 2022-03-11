@@ -51,7 +51,6 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var imageFileSaved: File? = null
-    //private lateinit var uriFilePath: Uri
     private var imageBitmap = MutableLiveData<Bitmap?>()
     private lateinit var currentJob: PDFJob
     private lateinit var coroutineScope: CoroutineScope
@@ -117,6 +116,10 @@ class MainFragment : Fragment() {
             val bundle = Bundle()
             bundle.putParcelable("pdfJob", currentJob)
             findNavController().navigate(R.id.action_MainFragment_to_processingFragment, bundle)
+        }
+
+        binding.displayPdfsButton.setOnClickListener {
+            findNavController().navigate(R.id.action_MainFragment_to_PDFListFragment)
         }
 
         imageBitmap.observe(viewLifecycleOwner, androidx.lifecycle.Observer { image ->
