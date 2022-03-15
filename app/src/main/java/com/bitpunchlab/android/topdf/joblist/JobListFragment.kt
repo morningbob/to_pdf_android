@@ -66,11 +66,12 @@ class JobListFragment : Fragment() {
                 Log.i("navigate observer", job.toString())
                 // update current job for the other fragments
                 jobsViewModel.currentJob = job
+                jobsViewModel.doneNavigating()
                 findNavController().navigate(
                     R.id.action_jobListFragment_to_MainFragment,
                     bundle
                 )
-                jobsViewModel.doneNavigating()
+
             }
         })
 

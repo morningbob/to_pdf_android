@@ -56,10 +56,16 @@ class PDFListFragment : Fragment() {
         })
 
         pdfViewModel.chosenPDF.observe(viewLifecycleOwner, Observer { pdf ->
-            // navigate to display pdf fragment
-            val bundle = Bundle()
-            bundle.putString("filename", pdf.fileName)
-            findNavController().navigate(R.id.action_PDFListFragment_to_displayPDFFragment, bundle)
+            pdf?.let {
+                // navigate to display pdf fragment
+                val bundle = Bundle()
+                bundle.putString("filename", pdf?.fileName)
+                pdfViewModel.doneNavigating()
+                findNavController().navigate(
+                    R.id.action_PDFListFragment_to_displayPDFFragment,
+                    bundle
+                )
+            }
         })
 
         return binding.root

@@ -10,7 +10,7 @@ class PDFViewModel : ViewModel() {
     var _pdfList = MutableLiveData<List<PDFItem>>()
     val pdfList get() = _pdfList
 
-    var _chosenPDF = MutableLiveData<PDFItem>()
+    var _chosenPDF = MutableLiveData<PDFItem?>()
     val chosenPDF get() = _chosenPDF
 
     fun onPDFClicked(pdf: PDFItem) {
