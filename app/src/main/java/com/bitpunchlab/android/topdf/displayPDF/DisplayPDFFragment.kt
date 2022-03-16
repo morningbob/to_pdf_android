@@ -3,9 +3,11 @@ package com.bitpunchlab.android.topdf.displayPDF
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.bitpunchlab.android.topdf.R
 import com.bitpunchlab.android.topdf.databinding.FragmentDisplayPDFBinding
@@ -21,6 +23,7 @@ class DisplayPDFFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -28,6 +31,7 @@ class DisplayPDFFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
+
         _binding = FragmentDisplayPDFBinding.inflate(inflater, container, false)
 
         fileName = requireArguments().getString("filename").toString()

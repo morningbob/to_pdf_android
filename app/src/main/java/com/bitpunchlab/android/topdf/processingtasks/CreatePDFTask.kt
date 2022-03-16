@@ -22,7 +22,7 @@ import java.io.IOException
 class CreatePDFTask(private val passedContext: Context) {
 
     private lateinit var coroutineScope: CoroutineScope
-    private var document = Document()
+    private lateinit var document: Document
     private lateinit var pdfWriter: PdfWriter
     private lateinit var jobsViewModel: JobsViewModel
     var done = MutableLiveData<Boolean>(false)
@@ -45,6 +45,7 @@ class CreatePDFTask(private val passedContext: Context) {
         // get the pdfWriter for the document
         done.postValue(false)
         val file = File(filePath)
+        document = Document()
         pdfWriter = PdfWriter.getInstance(document, FileOutputStream(file))
         document.open()
     }
@@ -77,4 +78,5 @@ class CreatePDFTask(private val passedContext: Context) {
             }
         }
     }
+
 }

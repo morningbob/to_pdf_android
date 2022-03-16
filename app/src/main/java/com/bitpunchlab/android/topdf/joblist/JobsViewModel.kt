@@ -26,7 +26,6 @@ class JobsViewModel(private val database: PDFDatabase) : ViewModel() {
 
     var imageBitmaps = MutableLiveData<List<Bitmap?>>()
 
-
     fun onJobClicked(job: PDFJob) {
         _chosenJob.value = job
     }

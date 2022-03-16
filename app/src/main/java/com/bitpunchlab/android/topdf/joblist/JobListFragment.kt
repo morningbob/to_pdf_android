@@ -71,7 +71,6 @@ class JobListFragment : Fragment() {
                     R.id.action_jobListFragment_to_MainFragment,
                     bundle
                 )
-
             }
         })
 

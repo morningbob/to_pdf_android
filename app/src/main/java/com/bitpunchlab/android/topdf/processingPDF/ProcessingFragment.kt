@@ -1,6 +1,7 @@
 package com.bitpunchlab.android.topdf.processingPDF
 
 import android.content.DialogInterface
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,10 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import com.bitpunchlab.android.topdf.R
 import com.bitpunchlab.android.topdf.database.PDFDatabase
@@ -41,6 +39,7 @@ class ProcessingFragment : Fragment() {
     private lateinit var createPDFTask: CreatePDFTask
     private lateinit var imageItemToBeProcessed: LiveData<List<ImageItem>>
     private var pdfName = MutableLiveData<String>()
+    private var processing = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,12 +56,17 @@ class ProcessingFragment : Fragment() {
         jobsViewModel = ViewModelProvider(requireActivity(), JobsViewModelFactory(database))
             .get(JobsViewModel::class.java)
         coroutineScope = CoroutineScope(Dispatchers.IO)
+
         val job = requireArguments().getParcelable<PDFJob>("pdfJob")
         if (job != null) {
             currentJob = job
+            Log.i("job", "is not null")
         } else {
             currentJob = jobsViewModel.currentJob!!
+            Log.i("job", "is null")
         }
+
+        Log.i("creating pdf", "yes")
         // we first load the imageItems from the job
         imageItemToBeProcessed = database.imageDAO.getAllImagesOfJob(currentJob.jobId)
         createPDFTask = CreatePDFTask(requireContext())
@@ -82,19 +86,24 @@ class ProcessingFragment : Fragment() {
         })
 
         // we need to wait for the bitmaps to be fetched from the database
-        jobsViewModel.imageBitmaps.observe(viewLifecycleOwner, androidx.lifecycle.Observer { bitmaps ->
-            bitmaps?.let {
-                if (pdfName.value != null) {
-                    Log.i("createTask", "started")
-                    // start to convert
-                    createPDFTask.createDocumentCoroutine(pdfName.value!!, jobsViewModel)
+        jobsViewModel.imageBitmaps.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { bitmaps ->
+                bitmaps?.let {
+                    if (pdfName.value != null) {
+                        Log.i("createTask", "started")
+                        // start to convert
+                        createPDFTask.createDocumentCoroutine(pdfName.value!!, jobsViewModel)
+                    }
                 }
-            }
-        })
+            })
 
         createPDFTask.done.observe(viewLifecycleOwner, Observer { value ->
             if (value) {
                 // alert user, the process completed
+                // reset current job to null, there is no job anymore, processing fragment won't
+                    // be triggered again.
+                jobsViewModel.currentJob = null
                 doneAlert()
             }
         })
@@ -112,12 +121,15 @@ class ProcessingFragment : Fragment() {
         // so, I got 2 places to start to process
         pdfName.observe(viewLifecycleOwner, Observer { name ->
             name?.let {
+                // info user the app is processing the document.
+                binding.processingMessage.text = "Creating the ${name}.pdf document."
+                binding.jobNameEditText.visibility = View.GONE
+                binding.submitButton.visibility = View.GONE
                 if (jobsViewModel.imageBitmaps.value != null) {
                     createPDFTask.createDocumentCoroutine(pdfName.value!!, jobsViewModel)
                 }
             }
         })
-
 
         return binding.root
     }
@@ -176,4 +188,19 @@ class ProcessingFragment : Fragment() {
         doneAlert.show()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
 }
+
+/*
+fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+    observe(lifecycleOwner, object : Observer<T> {
+        override fun onChanged(t: T?) {
+            observer.onChanged(t)
+            removeObserver(this)
+        }
+    })
+}
+*/

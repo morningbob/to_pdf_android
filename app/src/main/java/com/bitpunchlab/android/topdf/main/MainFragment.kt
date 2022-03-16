@@ -114,7 +114,6 @@ class MainFragment : Fragment() {
         }
 
         binding.createPdfButton.setOnClickListener {
-            // we'll do the check of images in processing fragment
             val bundle = Bundle()
             bundle.putParcelable("pdfJob", currentJob)
             findNavController().navigate(R.id.action_MainFragment_to_processingFragment, bundle)
