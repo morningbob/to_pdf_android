@@ -56,7 +56,7 @@ class MainFragment : Fragment() {
     private lateinit var coroutineScope: CoroutineScope
     private lateinit var database: PDFDatabase
     private lateinit var jobsViewModel: JobsViewModel
-
+    private lateinit var createPDFTask: CreatePDFTask
 
     private val requestPhotoCaptureResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -68,7 +68,6 @@ class MainFragment : Fragment() {
                 createImageItemAndInsert(imageBitmap.value, Uri.fromFile(imageFileSaved))
             } else {
                 Log.i(TAG, "failed to capture photo")
-
             }
         }
 
@@ -94,6 +93,11 @@ class MainFragment : Fragment() {
         setHasOptionsMenu(true)
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         coroutineScope = CoroutineScope(Dispatchers.IO)
+        createPDFTask = CreatePDFTask(requireContext())
+        // make sure if the pdf and images dirs are created
+        createPDFTask.createDir("pdf")
+        createPDFTask.createDir("pdf_images")
+
 
         binding.jobName.text = currentJob.jobName
 
@@ -175,7 +179,6 @@ class MainFragment : Fragment() {
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    //startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                     requestPhotoCaptureResult.launch(takePictureIntent)
                 }
             }
@@ -190,7 +193,8 @@ class MainFragment : Fragment() {
         val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         Log.i(
             "creating the file name",
-            requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString()
+            requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() +
+                    "/pdf_images"
         )
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
@@ -212,5 +216,4 @@ class MainFragment : Fragment() {
             Log.i(TAG, "image is null")
         }
     }
-
 }

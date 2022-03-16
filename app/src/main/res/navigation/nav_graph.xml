@@ -120,4 +120,8 @@
             app:destination="@id/displayPDFFragment"
             />
     </fragment>
+    <fragment
+        android:id="@+id/getPDFFragment"
+        android:name="com.bitpunchlab.android.topdf.getPDFFile.GetPDFFragment"
+        android:label="GetPDFFragment" />
 </navigation>

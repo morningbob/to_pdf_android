@@ -9,7 +9,8 @@ class ReadDirTask(private val passedContext: Context) {
 
     fun listFiles() : ArrayList<String> {
         val pdfPattern = ".pdf"
-        val path = passedContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString()
+        val path = passedContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString() +
+                "/pdf"
         val directory = File(path)
         val filesArray = directory.listFiles()
         val pdfFileList = ArrayList<String>()

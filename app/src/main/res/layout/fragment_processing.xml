@@ -19,7 +19,7 @@
             android:layout_marginRight="30sp"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:text="Please enter a job name: " />
+            android:text="@string/get_job_name" />
 
         <EditText
             android:id="@+id/jobNameEditText"

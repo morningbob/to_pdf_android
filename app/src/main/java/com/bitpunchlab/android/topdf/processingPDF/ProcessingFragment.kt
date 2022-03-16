@@ -27,7 +27,6 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
-
 class ProcessingFragment : Fragment() {
 
     private var _binding : FragmentProcessingBinding? = null
@@ -39,8 +38,6 @@ class ProcessingFragment : Fragment() {
     private lateinit var createPDFTask: CreatePDFTask
     private lateinit var imageItemToBeProcessed: LiveData<List<ImageItem>>
     private var pdfName = MutableLiveData<String>()
-    private var processing = true
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,7 +119,7 @@ class ProcessingFragment : Fragment() {
         pdfName.observe(viewLifecycleOwner, Observer { name ->
             name?.let {
                 // info user the app is processing the document.
-                binding.processingMessage.text = "Creating the ${name}.pdf document."
+                binding.processingMessage.text = "Creating the ${name}.pdf document...  Please wait."
                 binding.jobNameEditText.visibility = View.GONE
                 binding.submitButton.visibility = View.GONE
                 if (jobsViewModel.imageBitmaps.value != null) {
@@ -159,8 +156,8 @@ class ProcessingFragment : Fragment() {
     private fun noImageAlert() {
         val imageAlert = AlertDialog.Builder(requireContext())
 
-        imageAlert.setTitle("Create PDF document")
-        imageAlert.setMessage("There is no image to create the pdf document.")
+        imageAlert.setTitle(getString(R.string.create_pdf_alert_title))
+        imageAlert.setMessage(getString(R.string.create_pdf_alert_no_image))
 
         imageAlert.setPositiveButton("OK",
             DialogInterface.OnClickListener() { dialog, button ->
@@ -172,9 +169,9 @@ class ProcessingFragment : Fragment() {
     private fun doneAlert() {
         val doneAlert = AlertDialog.Builder(requireContext())
 
-        doneAlert.setTitle("PDF Document Created")
+        doneAlert.setTitle(getString(R.string.create_pdf_done_alert_title))
         doneAlert.setCancelable(false)
-        doneAlert.setMessage("The PDF ${pdfName.value} was created.")
+        doneAlert.setMessage("The PDF ${pdfName.value} was created.\nIt is located at /storage/emulated/0/Android/data/com.bitpunchlab.android.topdf/files/Documents/pdf/")
 
         doneAlert.setPositiveButton("OK",
             DialogInterface.OnClickListener() { dialog, button ->

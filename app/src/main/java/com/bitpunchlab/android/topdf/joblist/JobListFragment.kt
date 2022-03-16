@@ -27,7 +27,6 @@ class JobListFragment : Fragment() {
     private lateinit var jobAdapter: JobListAdapter
     private lateinit var jobsViewModel: JobsViewModel
     private lateinit var database: PDFDatabase
-    //private lateinit var coroutineScope: CoroutineScope
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

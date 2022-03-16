@@ -49,37 +49,37 @@
                 android:id="@+id/capture_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="capture picture" />
+                android:text="@string/capture_picture" />
 
             <Button
                 android:id="@+id/create_job_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="create a job" />
+                android:text="@string/create_a_job" />
 
             <Button
                 android:id="@+id/display_jobs_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="display all jobs" />
+                android:text="@string/display_all_jobs" />
 
             <Button
                 android:id="@+id/display_images_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="display images" />
+                android:text="@string/display_images" />
 
             <Button
                 android:id="@+id/display_pdfs_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="display all pdf" />
+                android:text="@string/display_all_pdf" />
 
             <Button
                 android:id="@+id/create_pdf_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="create pdf" />
+                android:text="@string/create_pdf" />
 
         </LinearLayout>
 

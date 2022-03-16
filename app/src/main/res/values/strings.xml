@@ -10,6 +10,24 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="intro_message">This app helps users to turn pictures into pdf documents. The user can take pictures, save in the device and process them later.</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_job_name">Please enter the name of the job:</string>
+    <string name="previous_page">Previous Page</string>
+    <string name="next_page">Next Page</string>
+    <string name="display_all_jobs">Display all jobs</string>
+    <string name="display_all_pdfs">Display all pdfs</string>
+    <string name="job_title">Jobs</string>
+    <string name="capture_picture">capture picture</string>
+    <string name="create_a_job">create a job</string>
+    <string name="display_images">Display images</string>
+    <string name="display_all_pdf">Display all pdf</string>
+    <string name="create_pdf">create pdf</string>
+    <string name="permissions_explanations">Please grant the camera permission and the write external storage permission to the app. The app needs it to create pdf documents and save it on device.</string>
+    <string name="create_pdf_alert_title">Create PDF document</string>
+    <string name="create_pdf_alert_no_image">There is no image to create the pdf document.</string>
+    <string name="create_pdf_done_alert_title">PDF Document Created</string>
+    <string name="get_file_intro">The app is opening the directory.</string>
+    <string name="opening_pdf_title">Open PDF directory</string>
+    <string name="get_pdf_file_title">Get PDF File</string>
+    <string name="pdf_location_intro">The created pdf documents are saved in the following directory: /storage/emulated/0/Android/data/com.bitpunchlab.android.topdf/files/Documents/pdf</string>
 </resources>

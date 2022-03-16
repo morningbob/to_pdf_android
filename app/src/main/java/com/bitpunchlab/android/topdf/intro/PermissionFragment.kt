@@ -56,7 +56,6 @@ class PermissionFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         if (!checkCameraPermission()) {
-            //val enableCameraAccessIntent = Intent(Manifest.permission.CAMERA)
             requestCameraPermissionResult.launch(Manifest.permission.CAMERA)
         } else {
             cameraEnabled.value = true
@@ -79,7 +78,6 @@ class PermissionFragment : Fragment() {
     private fun getWritePermission() {
         if (!checkWritePermission()) {
             requestWritePermissionResult.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            //findNavController().navigate(R.id.action_permissionFragment_to_IntroFragment)
         } else {
             findNavController().navigate(R.id.action_permissionFragment_to_IntroFragment)
         }

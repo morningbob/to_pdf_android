@@ -40,7 +40,7 @@
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                android:text="Please enter the name of the job" />
+                android:text="@string/get_job_name" />
 
             <EditText
                 android:id="@+id/job_name_input"

@@ -24,7 +24,8 @@ class ReadPDFTask(private val passedContext: Context) {
     var resultPDFBitmap = MutableLiveData<Bitmap?>()
 
     private fun openPDFFile() {
-        dirPath = passedContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString()
+        dirPath = passedContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString() +
+                "/pdf"
         val filePath = "$dirPath/$fileName.pdf"
         pdfFile = File(filePath)
         val fileDescriptor = ParcelFileDescriptor.open(pdfFile, ParcelFileDescriptor.MODE_READ_ONLY)

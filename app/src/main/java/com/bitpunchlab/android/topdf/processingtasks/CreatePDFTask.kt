@@ -38,7 +38,10 @@ class CreatePDFTask(private val passedContext: Context) {
     }
 
     private fun createDocument(filename: String) {
-        val dirPath = passedContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString()
+        var dirPath = passedContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString() +
+            "/pdf"
+        createDir("pdf")
+        Log.i("location", dirPath)
         Log.i("dirPath", dirPath)
         Log.i("filename", filename)
         filePath = "$dirPath/$filename.pdf"
@@ -75,6 +78,20 @@ class CreatePDFTask(private val passedContext: Context) {
                 }
             } catch (e: IOException) {
                 Log.i("create pdf task", "error getting image")
+            }
+        }
+    }
+
+    fun createDir(dirName: String) {
+        var dirPath = passedContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).toString() +
+                "/$dirName"
+        val fileDir = File(dirPath)
+        if (!fileDir.exists()) {
+            if (!fileDir.mkdir()) {
+                Log.i("create $dirName directory", "there is problem creating dir")
+                // here we may notify users the directory can't be created
+            } else {
+                Log.i("create $dirName dir", "success")
             }
         }
     }

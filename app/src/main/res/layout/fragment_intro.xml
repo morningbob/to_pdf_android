@@ -13,7 +13,7 @@
         android:id="@+id/app_icon"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +24,7 @@
         android:layout_width="0sp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="70sp"
-        android:layout_marginTop="70sp"
+        android:layout_marginTop="20sp"
         android:layout_marginRight="70sp"
         android:text="@string/intro_message"
         android:textSize="20sp"
@@ -36,10 +36,8 @@
         android:id="@+id/buttonGroup"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="144dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_introduction">
@@ -54,14 +52,29 @@
             android:id="@+id/displayJobButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Display all jobs" />
+            android:text="@string/display_all_jobs" />
 
         <Button
             android:id="@+id/displayPDFButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Display all pdfs" />
-
+            android:text="@string/display_all_pdfs" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/location_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginRight="30sp"
+        android:textSize="17sp"
+        android:textAlignment="center"
+        android:text="@string/pdf_location_intro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonGroup"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

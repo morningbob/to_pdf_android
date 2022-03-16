@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.bitpunchlab.android.topdf.R
 import com.bitpunchlab.android.topdf.databinding.FragmentIntroBinding
+import com.bitpunchlab.android.topdf.processingtasks.CreatePDFTask
 
 private const val TAG = "IntroFragment"
 
@@ -25,8 +26,8 @@ private const val TAG = "IntroFragment"
 class IntroFragment : Fragment() {
 
     private var _binding: FragmentIntroBinding? = null
-
     private val binding get() = _binding!!
+    private lateinit var createPDFTask: CreatePDFTask
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +35,11 @@ class IntroFragment : Fragment() {
     ): View? {
         setHasOptionsMenu(true)
         _binding = FragmentIntroBinding.inflate(inflater, container, false)
+
+        createPDFTask = CreatePDFTask(requireContext())
+        // create pdf and images dirs for the use of storing image files and the pdf document
+        createPDFTask.createDir("pdf")
+        createPDFTask.createDir("pdf_images")
 
         binding.createJobButton.setOnClickListener {
             findNavController().navigate(R.id.action_IntroFragment_to_createJobFragment)
@@ -65,8 +71,6 @@ class IntroFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_intro, menu)
-        //menu.findItem(R.id.MainFragment).isVisible = false
-        //menu.findItem(R.id.displayImagesFragment).isVisible = false
         super.onCreateOptionsMenu(menu, inflater)
     }
 

@@ -5,12 +5,12 @@
     <item
         android:id="@+id/jobListFragment"
         android:orderInCategory="100"
-        android:title="Display all jobs"
+        android:title="@string/display_all_jobs"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/PDFListFragment"
         android:orderInCategory="100"
-        android:title="Display all pdfs"
+        android:title="@string/display_all_pdfs"
         app:showAsAction="never" />
 </menu>

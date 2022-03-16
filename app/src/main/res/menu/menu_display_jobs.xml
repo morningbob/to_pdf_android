@@ -5,7 +5,7 @@
     <item
         android:id="@+id/PDFListFragment"
         android:orderInCategory="100"
-        android:title="Display all pdfs"
+        android:title="@string/display_all_pdfs"
         app:showAsAction="never" />
 
 </menu>

@@ -36,14 +36,5 @@
 
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    <!--
-    <variable
-            name="imageClickListener"
-            type="com.bitpunchlab.android.topdf.images.ImageListener" />
 
-
-
-            android:onClick="@{()-> imageClickListener.onClick(imageItem, position)}"
-
-            -->
 </layout>

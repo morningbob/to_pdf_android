@@ -24,6 +24,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_IntroFragment_to_PDFListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_IntroFragment_to_createJobFragment">
                               <value>
                                 <LayoutPositions />
@@ -51,6 +56,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_MainFragment_to_IntroFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_MainFragment_to_PDFListFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -89,6 +99,15 @@
                             <option name="y" value="-372" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_PDFListFragment_to_displayPDFFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -120,6 +139,27 @@
                           <Point>
                             <option name="x" value="-389" />
                             <option name="y" value="60" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_displayPDFFragment_to_IntroFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="getPDFFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-341" />
+                            <option name="y" value="703" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -190,6 +230,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_processingFragment_to_MainFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_processingFragment_to_displayPDFFragment">
                               <value>
                                 <LayoutPositions />
