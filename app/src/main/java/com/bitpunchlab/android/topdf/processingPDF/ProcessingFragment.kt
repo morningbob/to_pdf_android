@@ -120,6 +120,7 @@ class ProcessingFragment : Fragment() {
             name?.let {
                 // info user the app is processing the document.
                 binding.processingMessage.text = "Creating the ${name}.pdf document...  Please wait."
+                binding.progressBar.visibility = View.VISIBLE
                 binding.jobNameEditText.visibility = View.GONE
                 binding.submitButton.visibility = View.GONE
                 if (jobsViewModel.imageBitmaps.value != null) {
