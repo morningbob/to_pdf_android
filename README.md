@@ -21,36 +21,42 @@
 <center> Home screen </center>
 &nbsp;
 &nbsp;
+<br/>
 <img src="to_pdf_02.jpg" alt="create a job screenshot" style="width:250px; margin-left: auto; margin-right: auto; display: block;" />
 
 &nbsp;
 <center> Create a job </center>
 &nbsp;
 &nbsp;
+<br/>
 <img src="to_pdf_05.jpg" alt="user can take photos screenshot" style="width:250px; margin-left: auto; margin-right: auto; display: block;" />
 
 &nbsp;
 <center> Users can take photos.  The photos will be stored in the device.  Users can take a look at them by choosing the associated job.   </center>
 &nbsp;
 &nbsp;
+<br/>
 <img src="to_pdf_06.jpg" alt="images in a job screenshot" style="width:250px; margin-left: auto; margin-right: auto; display: block;" />
 
 &nbsp;
 <center> Images in a particular job.   </center>
 &nbsp;
 &nbsp;
+<br/>
 <img src="to_pdf_07.jpg" alt="create a pdf screenshot" style="width:250px; margin-left: auto; margin-right: auto; display: block;" />
 
 &nbsp;
 <center> Users can create the pdf document from the images of a job.  The app will ask for a file name.   </center>
 &nbsp;
 &nbsp;
+<br/>
 <img src="to_pdf_03.jpg" alt="create a pdf screenshot" style="width:250px; margin-left: auto; margin-right: auto; display: block;" />
 
 &nbsp;
 <center> All the pdfs created will be saved in the device.  Users can choose the pdf and display the content in the app.   </center>
 &nbsp;
 &nbsp;
+<br/>
 <img src="to_pdf_08.jpg" alt="pdf content screenshot" style="width:250px; margin-left: auto; margin-right: auto; display: block;" />
 
 &nbsp;
